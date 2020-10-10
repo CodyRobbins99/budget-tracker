@@ -46,24 +46,17 @@ self.addEventListener('activate', function(e) {
     self.clients.claim();
 });
 
-self.addEventListener('fetch', function(e) {
-    console.log('fetch request : ' + e.request.url);
+self.addEventListener('fetch', function (e) {
+    console.log('fetch request : ' + e.request.url)
     e.respondWith(
-        caches.match(e.request).then(function(request) {
-        if (request) {
-            console.log(`responding with cache : ${e.request.url}`);
-            return request;
-        }
-
-        console.log(`file is not cached, fetching : ${e.request.url}`);
-        fetch(e.request).then(response => {
-            if (response.status === 200) {
-            caches.open(CACHE_NAME).then(cache => {
-                cache.put(e.request.url, response.clone());
-            });
+        caches.match(e.request).then(function (request) {
+            if (request) {
+                console.log('responding with cache : ' + e.request.url)
+                return request
+            } else {
+                console.log('file is not cached, fetching : ' + e.request.url)
+                return fetch(e.request)
             }
-            return response;
-        });
         })
-    );
+    )
 });
