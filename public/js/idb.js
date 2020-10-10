@@ -15,7 +15,7 @@ request.onsuccess = function(event) {
 
     if (navigator.onLine) {
 
-        uploadtransaction();
+        uploadtransactions();
     }
 };
 
